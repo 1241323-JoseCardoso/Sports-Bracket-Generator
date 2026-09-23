@@ -11,7 +11,7 @@ The project focuses on applying software engineering concepts such as domain mod
 The application should provide a clear visualization of the tournament progression while keeping the tournament logic independent from the presentation layer.
 
 ---
-
+ 
 ## 2. MVP (Minimum Viable Product)
 
 The first version should support:
