@@ -11,20 +11,16 @@ public class Tournament {
     private UUID id;
     private String code;
     private int maxTeams;
-    private LocalDate startDate;
-    private LocalDate endDate;
 
-    private Tournament(String name, int maxTeams, LocalDate startDate, LocalDate endData){
+    private Tournament(String name, int maxTeams){
 
-        this.startDate = startDate;
-        this.endDate = endData;
         this.code = generateCode(name);
         this.maxTeams = maxTeams;
         this.id = UUID.randomUUID();
 
     }
 
-    public void of(String name, int maxTeams, LocalDate startDate, LocalDate endDate){
+    public void of(String name, int maxTeams){
 
         if(name == null || name.isBlank()){
 
@@ -38,19 +34,7 @@ public class Tournament {
 
         }
 
-        if(startDate.isAfter(endDate)){
-
-            throw new IllegalArgumentException("Data inicial é após a data final");
-
-        }
-
-        if(startDate.isBefore(LocalDate.now())){
-
-            throw new IllegalArgumentException("Data inicial colocada encontra-se inválida");
-
-        }
-
-        new Tournament(name, maxTeams, startDate, endDate);
+        new Tournament(name, maxTeams);
 
     }
 

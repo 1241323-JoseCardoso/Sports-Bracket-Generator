@@ -1,4 +1,4 @@
-@startuml Calculator
+@startuml Sports Bracket
 
 skinparam classAttributeIconSize 0
 skinparam classFontSize 13
@@ -31,65 +31,67 @@ skinparam package {
 
 skinparam ArrowColor #444441
 
-package "Calculator" <<Frame>>{
+package "Tournament" <<Frame>> {
 
-        class Calculator <<Aggregate Root>>{
+    class TournamentSession <<Aggregate Root>>{
 
-                - input : CalculatorInput
-                - calculationList : List<Calculation>
-                - opType : OperatorType
-                - status : CalculatorStatus
-                - displayValue : DisplayValue
-                - storedValue : Double
-                - hasOp : boolean
+                - tournament : Tournament
+                - tournamentState : TournamentSessionState
+                - startDate : LocalDate
+                - endDate : LocalDate
+                - teams : List<Team>
+    }
 
-        }
+    /'
+      Pensando de uma maneira racional, os tournaments não poderão ser considerados como value objetcs uma vez que possuem ID's.
 
-        class Calculation <<Value Object>>{
+      Podemos utilizar um mesmo torneio, desde que possamos alterar o startDate e o endDate.
 
-    - firstNumber : Double
-    - secondNumber : Double
-    - opType : OperatorType
-    - result : Double
+      Tendo isto em conta, o startDate e endDate deixa de fazer sentido dentro do tournament e terão que ser movidos para dentro do TournamentSession
+    '/
 
-        }
+    class Tournament <<Entity>>{
 
-        class CalculatorInput <<Value Object>>{
+                - code : String
+                - maxTeams : int
+    }
 
-         - input : String
-         - dot : boolean
+    enum TournamentSessionState <<Value Object>>{
 
+                 CONCLUDED,
+                 DRAFTED,
+                 PAUSED,
+                 IN_PROGRESS
 
-        }
-
-        enum OperatorType <<Value Object>>{
-
-            ADD
-            SUBTRACT
-            DIVIDE
-            MULTIPLY
-
-        }
-
-        class DisplayValue <<Value Object>>{
-
-            - currentValue : String
-        }
-
-        enum CalculatorStatus <<Value Object>>{
-
-            READY
-            ERR
-
-        }
-
-Calculator *-- OperatorType
-Calculator *-- CalculatorStatus
-Calculator "1" *-- "0..*" Calculation
-Calculator *-- CalculatorInput
-Calculator *-- DisplayValue
+    }
 
 }
+
+package "Team" <<Frame>>{
+
+    class Team <<Aggregate Root>>{
+
+            - name : String
+            - numberLosses : int
+            - numberWins : int
+
+    }
+
+}
+
+package "Match" <<Frame>>{
+
+    class Match <<Entity>>{
+
+        - teamOne : Team
+        - teamSecond : Team
+        - winningTeam : Team
+        - leftRound : Match
+        - rightRound : Match
+    }
+
+}
+
 
 
 
