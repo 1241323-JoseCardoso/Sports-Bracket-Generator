@@ -49,4 +49,10 @@ public class Tournament {
 
         return slug + "-" + shortHash;
     }
+
+    public int getMaxTeams(){
+
+        return maxTeams;
+
+    }
 }

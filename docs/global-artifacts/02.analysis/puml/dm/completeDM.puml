@@ -50,6 +50,11 @@ package "Tournament" <<Frame>> {
       Tendo isto em conta, o startDate e endDate deixa de fazer sentido dentro do tournament e terão que ser movidos para dentro do TournamentSession
     '/
 
+    /'
+        Quando é que uma equipa pode ser considerada como vencedora?
+
+    '/
+
     class Tournament <<Entity>>{
 
                 - code : String
@@ -81,7 +86,7 @@ package "Team" <<Frame>>{
 
 package "Match" <<Frame>>{
 
-    class Match <<Entity>>{
+    class Match <<Aggregate Root>>{
 
         - teamOne : Team
         - teamSecond : Team

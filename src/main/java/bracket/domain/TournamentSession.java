@@ -1,6 +1,8 @@
 package bracket.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TournamentSession {
 
@@ -8,6 +10,8 @@ public class TournamentSession {
     private final Tournament tournament;
     private LocalDate startDate;
     private LocalDate endDate;
+    private List<Team> teamsList;
+    private int numberTeams;
 
     private TournamentSession(Tournament tournament, LocalDate startDate, LocalDate endDate) {
 
@@ -15,6 +19,8 @@ public class TournamentSession {
         this.startDate = startDate;
         this.endDate = endDate;
         this.sessionState = TournamentSessionState.DRAFTED;
+        this.teamsList = new ArrayList<>();
+        this.numberTeams = 0;
 
     }
 
@@ -45,6 +51,19 @@ public class TournamentSession {
 
         this.sessionState = state;
 
+    }
+
+    public void addTeam(Team team){
+
+        if(numberTeams + 1 > tournament.getMaxTeams()){
+
+            System.out.println("Lista cheia!");
+            return;
+
+        }
+
+        teamsList.add(team);
+        numberTeams++;
     }
 
 }
