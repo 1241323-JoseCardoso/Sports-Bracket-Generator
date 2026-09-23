@@ -1,0 +1,188 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+skinparam classFontSize 13
+skinparam shadowing false
+skinparam ArrowColor #444441
+
+skinparam package {
+    BackgroundColor #FAFAFA
+    BorderColor #BDBDBD
+    BorderStyle dashed
+    FontSize 14
+}
+
+skinparam class {
+
+    BackgroundColor #FFFFFF
+    BorderColor #616161
+    FontColor #212121
+    HeaderBackgroundColor #EEEEEE
+
+    BackgroundColor<<Controller>> #E8F5E9
+    BorderColor<<Controller>> #2E7D32
+    FontColor<<Controller>> #1B5E20
+    HeaderBackgroundColor<<Controller>> #C8E6C9
+
+    BackgroundColor<<Service>> #FFF3E0
+    BorderColor<<Service>> #EF6C00
+    FontColor<<Service>> #E65100
+    HeaderBackgroundColor<<Service>> #FFE0B2
+
+    BackgroundColor<<Aggregate Root>> #E3F2FD
+    BorderColor<<Aggregate Root>> #1565C0
+    FontColor<<Aggregate Root>> #1565C0
+    HeaderBackgroundColor<<Aggregate Root>> #BBDEFB
+
+    BackgroundColor<<Entity>> #FFF8E1
+    BorderColor<<Entity>> #F57F17
+    FontColor<<Entity>> #F57F17
+    HeaderBackgroundColor<<Entity>> #FFE082
+
+    BackgroundColor<<Value Object>> #F1F8E9
+    BorderColor<<Value Object>> #558B2F
+    FontColor<<Value Object>> #33691E
+    HeaderBackgroundColor<<Value Object>> #DCEDC8
+
+    BackgroundColor<<Enumeration>> #F3E5F5
+    BorderColor<<Enumeration>> #6A1B9A
+    FontColor<<Enumeration>> #6A1B9A
+    HeaderBackgroundColor<<Enumeration>> #E1BEE7
+
+    BackgroundColor<<Boundary>> #ECEFF1
+    BorderColor<<Boundary>> #546E7A
+    FontColor<<Boundary>> #37474F
+    HeaderBackgroundColor<<Boundary>> #CFD8DC
+}
+
+
+package "Presentation" <<Frame>>{
+
+class CalculatorUI <<User Interface>>{
+
+    + entryPad : EntryPad
+    + calculator : CalculatorDTO
+
+}
+enum Buttons <<Value Object>>{
+    DIGIT
+    OPERATOR
+    ACTION
+}
+
+class EntryPad <<Value Object>>{
+
+    - buttons : List<Buttons>
+
+}
+
+
+}
+
+package "Application" <<Frame>>{
+
+class CalculatorController <<Controller>> {
+
+    - service : CalculatorService
+
+    + pressDigit(digit) : String
+
+}
+
+}
+
+package "Domain" <<Frame>>{
+
+class CalculatorService <<Service>> {
+
+    - calculator : Calculator
+    - map : HashMap<String, OperatorType>
+    + update(digit) : void
+    + getCalculatorDisplayValue() : String
+
+}
+
+class Calculator <<Aggregate Root>>{
+
+    - input : CalculatorInput
+    - calculationList : List<Calculation>
+    - opType : OperatorType
+    - status : CalculatorStatus
+    - displayValue : DisplayValue
+    - storedValue : Double
+    - hasOp : boolean
+
+    + resultHandler() : void
+    + input() : String
+    + displayValue() : String
+    + defineOperatorType(operatorType) : void
+    + hasOp() : boolean
+    + signalHandler(digit) : void
+    + dotHandler(digit) : void
+    + numberHandler(digit) : void
+    + nDigits() : void
+    + reset() : void
+    + deleteLastDigit() : void
+
+}
+
+class Calculation <<Value Object>>{
+
+    - firstNumber : Double
+    - secondNumber : Double
+    - opType : OperatorType
+    - result : Double
+
+    - resultValue() : void
+    # getResult() : double
+
+}
+
+class CalculatorInput <<Value Object>>{
+
+    - input : String
+    - dot : boolean
+    + nDigits() : int
+    + input() : String
+    + hasDot() : boolean
+    + setDot() : void
+
+}
+
+enum OperatorType <<Value Object>>{
+
+    ADD
+    SUBTRACT
+    DIVIDE
+    MULTIPLY
+
+}
+
+class DisplayValue <<Value Object>>{
+
+    - currentValue : String
+    + getValue() : String
+}
+
+enum CalculatorStatus <<Value Object>>{
+
+    READY
+    ERR
+
+}
+
+
+}
+
+
+Calculator *-- CalculatorInput
+Calculator "1" *-- "0..*" Calculation
+Calculator *-- DisplayValue
+CalculatorController "1" --> "1" CalculatorService
+CalculatorUI "1" --> "1" CalculatorController
+CalculatorUI "1" --> "1" EntryPad
+EntryPad *-- Buttons
+CalculatorService --> Calculator
+
+
+@enduml

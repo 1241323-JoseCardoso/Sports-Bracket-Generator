@@ -1,0 +1,96 @@
+@startuml Calculator
+
+skinparam classAttributeIconSize 0
+skinparam classFontSize 13
+skinparam shadowing false
+
+skinparam class {
+    BackgroundColor<<Aggregate Root>> #E3F2FD
+    BorderColor<<Aggregate Root>> #1565C0
+    FontColor<<Aggregate Root>> #1565C0
+    HeaderBackgroundColor<<Aggregate Root>> #BBDEFB
+
+    BackgroundColor<<Entity>> #FFF8E1
+    BorderColor<<Entity>> #F57F17
+    FontColor<<Entity>> #F57F17
+    HeaderBackgroundColor<<Entity>> #FFE082
+
+    BackgroundColor<<Value Object>> #F1F8E9
+    BorderColor<<Value Object>> #558B2F
+    FontColor<<Value Object>> #558B2F
+    HeaderBackgroundColor<<Value Object>> #DCEDC8
+}
+
+skinparam package {
+    BackgroundColor #FAFAFA
+    BorderColor #BDBDBD
+    BorderStyle dashed
+    FontSize 14
+}
+
+
+skinparam ArrowColor #444441
+
+package "Calculator" <<Frame>>{
+
+        class Calculator <<Aggregate Root>>{
+
+                - input : CalculatorInput
+                - calculationList : List<Calculation>
+                - opType : OperatorType
+                - status : CalculatorStatus
+                - displayValue : DisplayValue
+                - storedValue : Double
+                - hasOp : boolean
+
+        }
+
+        class Calculation <<Value Object>>{
+
+    - firstNumber : Double
+    - secondNumber : Double
+    - opType : OperatorType
+    - result : Double
+
+        }
+
+        class CalculatorInput <<Value Object>>{
+
+         - input : String
+         - dot : boolean
+
+
+        }
+
+        enum OperatorType <<Value Object>>{
+
+            ADD
+            SUBTRACT
+            DIVIDE
+            MULTIPLY
+
+        }
+
+        class DisplayValue <<Value Object>>{
+
+            - currentValue : String
+        }
+
+        enum CalculatorStatus <<Value Object>>{
+
+            READY
+            ERR
+
+        }
+
+Calculator *-- OperatorType
+Calculator *-- CalculatorStatus
+Calculator "1" *-- "0..*" Calculation
+Calculator *-- CalculatorInput
+Calculator *-- DisplayValue
+
+}
+
+
+
+@enduml

@@ -1,0 +1,32 @@
+@startuml "Sports Bracket"
+left to right direction
+skinparam actorStyle awesome
+
+actor "User" as US
+
+  package "Sports Bracket" as SB {
+
+    usecase "Create Tournament" as UC01
+    usecase "Validate Tournament Dates" as UC02
+    usecase "Register Teams" as UC03
+    usecase "Generate Tournament Bracket" as UC04
+    usecase "View Tournament Progress" as UC05
+    usecase "Register Match Result Button" as UC06
+    usecase "Complete Tournament" as UC07
+    usecase "Save Tournament" as UC08
+    usecase "View Tournament History" as UC09
+
+  }
+
+US --> UC01
+US --> UC02
+US --> UC03
+US --> UC04
+US --> UC05
+US --> UC06
+US --> UC07
+US --> UC08
+US --> UC09
+
+
+@enduml
