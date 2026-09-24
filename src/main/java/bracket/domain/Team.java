@@ -1,5 +1,6 @@
 package bracket.domain;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Team {
@@ -18,15 +19,15 @@ public class Team {
 
     }
 
-    public void of(String name){
+    public static Team of(String name){
 
-        if(name == null || name.isEmpty()){
+        if(name == null || name.isBlank()){
 
             throw new IllegalArgumentException("Nome inválido");
 
         }
 
-        new Team(name);
+        return new Team(name);
 
     }
 
@@ -40,6 +41,27 @@ public class Team {
 
        numberWins += 1;
 
+    }
+
+    public UUID getId(){
+
+        return id;
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Team team = (Team) o;
+        return Objects.equals(this.id, team.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }
