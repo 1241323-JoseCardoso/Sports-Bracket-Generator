@@ -24,7 +24,6 @@ public class Match {
         if(leftRound != null) leftRound.parent = this;
         if(rightRound != null) rightRound.parent = this;
 
-
     }
 
     public static Match of(Team teamOne, Team teamSecond, Match leftRound, Match rightRound){
