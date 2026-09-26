@@ -65,6 +65,18 @@ public class Match {
 
     }
 
+    protected Team teamOne(){
+
+        return teamOne;
+
+    }
+
+    protected Team teamSecond(){
+
+        return teamSecond;
+
+    }
+
 
 
 }

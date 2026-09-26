@@ -31,7 +31,7 @@ skinparam package {
 
 skinparam ArrowColor #444441
 
-package "Tournament" <<Frame>> {
+package "Tournament Aggregate" <<Frame>> {
 
     class TournamentSession <<Aggregate Root>>{
 
@@ -72,7 +72,7 @@ package "Tournament" <<Frame>> {
 
 }
 
-package "Team" <<Frame>>{
+package "Team Aggregate" <<Frame>>{
 
     class Team <<Aggregate Root>>{
 
@@ -84,7 +84,7 @@ package "Team" <<Frame>>{
 
 }
 
-package "Match" <<Frame>>{
+package "Match Aggregate" <<Frame>>{
 
     class Match <<Aggregate Root>>{
 
@@ -95,9 +95,17 @@ package "Match" <<Frame>>{
         - rightRound : Match
     }
 
+    class MatchSession <<Entity>>{
+
+        - match : Match
+        - finished : boolean
+        - teams : HashMap<Team, Integer>
+
+    }
+
 }
 
-
+Team "2" --> "*" Match
 
 
 @enduml

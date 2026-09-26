@@ -1,38 +1,65 @@
 package bracket.domain;
 
+import java.util.HashMap;
+
 public class MatchSession {
 
-    private Team teamA;
-    private Team teamB;
     private Match match;
     private boolean finished;
 
-    private int numberGoalsA;
-    private int numberGoalsB;
+    private HashMap<Team, Integer> teams = new HashMap<>();
 
-    public MatchSession(Team teamA, Team teamB, int numberGoalsA, int numberGoalsB, Match match){
+    public MatchSession(Match match){
 
-        this.teamA = teamA;
-        this.teamB = teamB;
-        this.numberGoalsA = numberGoalsA;
-        this.numberGoalsB = numberGoalsB;
+        if(match == null || match.teamOne() == null || match.teamSecond() == null){
+
+            throw new IllegalArgumentException("Erro! Match Node inválido.");
+
+        }
+
         this.match = match;
+        this.teams.put(match.teamOne(), 0);
+        this.teams.put(match.teamSecond(), 0);
         this.finished = false;
+
+    }
+
+    public boolean isFinished(){
+
+        return finished;
 
     }
 
     public void setNumberGoalsA(int number){
 
-        numberGoalsA = number;
+        if(isFinished()) return;
+        teams.put(match.teamOne(), number);
 
     }
 
     public void setNumberGoalsB(int number){
 
-        numberGoalsB = number;
+        teams.put(match.teamSecond(), number);
 
     }
 
+    public void setFinished(){
 
+        if(isFinished()) return;
+        finished = true;
 
+        int numberGoalsA = teams.get(match.teamOne());
+        int numberGoalsB = teams.get(match.teamSecond());
+
+        if(numberGoalsA > numberGoalsB){
+
+            match.setWinningTeam(match.teamOne());
+
+        }else if(numberGoalsA < numberGoalsB){
+
+            match.setWinningTeam(match.teamSecond());
+
+        }
+
+    }
 }

@@ -20,7 +20,7 @@ public class Tournament {
 
     }
 
-    public void of(String name, int maxTeams){
+    public static Tournament of(String name, int maxTeams){
 
         if(name == null || name.isBlank()){
 
@@ -34,7 +34,7 @@ public class Tournament {
 
         }
 
-        new Tournament(name, maxTeams);
+        return new Tournament(name, maxTeams);
 
     }
 

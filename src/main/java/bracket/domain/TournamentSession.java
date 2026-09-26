@@ -24,7 +24,7 @@ public class TournamentSession {
 
     }
 
-    public void of(Tournament tournament, LocalDate startDate, LocalDate endDate){
+    public static TournamentSession of(Tournament tournament, LocalDate startDate, LocalDate endDate){
 
         if(tournament == null){
 
@@ -43,7 +43,7 @@ public class TournamentSession {
 
         }
 
-        new TournamentSession(tournament, startDate, endDate);
+        return new TournamentSession(tournament, startDate, endDate);
 
     }
 
