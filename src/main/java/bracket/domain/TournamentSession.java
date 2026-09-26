@@ -150,4 +150,10 @@ public class TournamentSession {
         this.rounds = nextRoundMatches;
         this.roundWinners.clear();
     }
+
+    public TournamentSessionState getSessionState(){
+
+        return sessionState;
+
+    }
 }
