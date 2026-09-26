@@ -77,6 +77,12 @@ public class Match {
 
     }
 
+    protected Team getWinningTeam(){
+
+        return winningTeam;
+
+    }
+
 
 
 }
