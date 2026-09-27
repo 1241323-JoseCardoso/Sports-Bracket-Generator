@@ -40,6 +40,9 @@ package "Tournament Aggregate" <<Frame>> {
                 - startDate : LocalDate
                 - endDate : LocalDate
                 - teams : List<Team>
+                - rounds : List<Match>
+                - roundWinners : List<Team>
+                - winner : Team
     }
 
     /'
@@ -91,8 +94,7 @@ package "Match Aggregate" <<Frame>>{
         - teamOne : Team
         - teamSecond : Team
         - winningTeam : Team
-        - leftRound : Match
-        - rightRound : Match
+
     }
 
     class MatchSession <<Entity>>{
@@ -105,7 +107,15 @@ package "Match Aggregate" <<Frame>>{
 
 }
 
-Team "2" --> "*" Match
+TournamentSession "1" *-- "1" Tournament : ref
+TournamentSession "1" *-- "1" TournamentSessionState : state
+TournamentSession "1" o-- "*" Team : teamsList / roundWinners
+TournamentSession "1" *-- "*" Match : rounds
+TournamentSession "1" --> "0..1" Team : winner
+
+Match "*" --> "2" Team : teamOne / teamSecond
+Match "1" --> "0..1" Team : winningTeam
+MatchSession "1" *-- "1" Match : match
 
 
 @enduml
