@@ -62,4 +62,10 @@ public class MatchSession {
         }
 
     }
+
+    public Match getMatch(){
+
+        return match;
+
+    }
 }

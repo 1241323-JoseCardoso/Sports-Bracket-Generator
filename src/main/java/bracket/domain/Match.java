@@ -65,19 +65,19 @@ public class Match {
 
     }
 
-    protected Team teamOne(){
+    public Team teamOne(){
 
         return teamOne;
 
     }
 
-    protected Team teamSecond(){
+    public Team teamSecond(){
 
         return teamSecond;
 
     }
 
-    protected Team getWinningTeam(){
+    public Team getWinningTeam(){
 
         return winningTeam;
 

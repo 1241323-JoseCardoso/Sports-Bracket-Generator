@@ -64,8 +64,12 @@ public class TournamentSession {
 
         if(numberTeams + 1 > tournament.getMaxTeams()){
 
-            System.out.println("Lista cheia!");
-            return;
+            throw new IllegalArgumentException("Ultrapassa o número de equipas definido.");
+        }
+
+        if(teamsList.contains(team)){
+
+            throw new IllegalArgumentException("Equipa já pertence ao torneio!");
 
         }
 
@@ -101,13 +105,7 @@ public class TournamentSession {
         setSessionState(TournamentSessionState.IN_PROGRESS);
     }
 
-    boolean isPowerOfTwoUsingBitwiseOperation(int n) {
-        return (n != 0) && ((n & (n - 1)) == 0);
-    }
-
-
-    public void nextRound(Match match){
-
+    public void nextRound(Match match) {
         if (!rounds.contains(match)) {
             throw new IllegalArgumentException("Este jogo não pertence à ronda atual!");
         }
@@ -116,22 +114,20 @@ public class TournamentSession {
             throw new IllegalStateException("O jogo ainda não tem um vencedor definido!");
         }
 
-        roundWinners.add(match.getWinningTeam());
+        this.roundWinners.add(match.getWinningTeam());
 
-        if(roundWinners.size() == rounds.size()){
-
+        if (this.roundWinners.size() == this.rounds.size()) {
             advanceToNextRound();
-
         }
     }
 
     public void advanceToNextRound(){
 
-        if(roundWinners.size() == 1){
+        if(rounds.size() == 1){
 
             System.out.println("O torneio chegou ao fim!");
+            this.winner = rounds.getFirst().getWinningTeam();
             this.sessionState = TournamentSessionState.CONCLUDED;
-            this.winner = roundWinners.get(0);
 
             return;
 
@@ -156,4 +152,33 @@ public class TournamentSession {
         return sessionState;
 
     }
+
+    public List<Match> getRounds(){
+
+        return rounds;
+
+    }
+
+    public int getNumberRounds(){
+
+        return rounds.size();
+    }
+
+    public int getMatchesInCurrentRound(){
+
+        return roundWinners.size() + 1;
+    }
+
+    public Team getWinner(){
+
+        return winner;
+
+    }
+
+    //Utility Method --> Straight from W2Schools LMAO
+
+    boolean isPowerOfTwoUsingBitwiseOperation(int n) {
+        return (n != 0) && ((n & (n - 1)) == 0);
+    }
+
 }
