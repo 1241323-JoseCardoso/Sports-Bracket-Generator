@@ -46,6 +46,8 @@ Presentation / API
 Application
     ↓
 Domain
+   ↓
+Infrastructure 
 ```
 ### Domain Layer
 
